@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-const About = () => (
-  <div className="content-container">
+function About() {
+  const [data, setData] = useState('');
+
+  useEffect(() => {
+    (async function () {
+      const { text } = await( await fetch(`/api/message`)).json();
+      setData(text);
+    })();
+  });
+
+  
+  return (
+    <div className="content-container">
     <div className="content-title-group not-found">
       <h2 className="title">Product Wish List</h2>
       <p>
@@ -17,8 +28,10 @@ const About = () => (
           </a>
         </li>
       </ul>
-    </div>
+    </div>    
+    <div>Message from function: {data}</div>
   </div>
-);
+  );
+}
 
 export default About;
